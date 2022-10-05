@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,6 +26,15 @@ public class MemberController {
         model.addAttribute("memberForm", new MemberForm());
         return "members/createMemberForm";
     }
+
+    //추가
+    @GetMapping(value = "/members")
+    public String list(Model model) {
+        List<Member> members = memberService.findMembers();
+        model.addAttribute("members", members);
+        return "members/memberList";
+    }
+
 
     @PostMapping("/members/new")
     public String create(@Valid MemberForm form , BindingResult result){
