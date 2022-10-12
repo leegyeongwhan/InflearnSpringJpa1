@@ -46,6 +46,31 @@ public class OrderApiController {
         return collect;
     }
 
+    @GetMapping("/api/v3/orders")
+    public List<OrderDto> ordersV3() {
+        List<Order> orders = orderRepository.findAllWithItem();
+        for (Order order : orders) {
+            System.out.println("order = " + order + "order.id = " + order.getId());
+        }
+        List<OrderDto> collect = orders.stream()
+                .map(o -> new OrderDto(o))
+                .collect(toList());
+        return collect;
+    }
+
+    @GetMapping("/api/v3.1/orders")
+    public List<OrderDto> ordersV3_page() {
+        List<Order> orders = orderRepository.findALlWithMemberDelivery();
+        for (Order order : orders) {
+            System.out.println("order = " + order + "order.id = " + order.getId());
+        }
+        List<OrderDto> collect = orders.stream()
+                .map(o -> new OrderDto(o))
+                .collect(toList());
+        return collect;
+    }
+
+
     @Data
     static class OrderDto {
         private Long orderId;
